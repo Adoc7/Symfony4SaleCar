@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% form_theme formAnnonces 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    <div class="container">
+
+        {% if editmode %}
+        <h1><strong>Modifier votre annonce</h1></strong></div>
+        {% else %}
+        <h1><strong>Ajouter votre annonce</h1></strong></div>
+        {% endif %}
+
+        {{form_start(formAnnonces)}}
+        {# {{form_widget(formAnnonces)}} #}
+        {{form_row(formAnnonces.titre, {'label':' ','attr':{'placeholder':'Quel est le titre de Votre annonce'}} )}}
+        {{form_row(formAnnonces.category, {'label':' '})}}
+        {{form_row(formAnnonces.pseudo, {'label':' ','attr':{'placeholder':'Quel est votre pseudo ?'}} )}}
+        {{form_row(formAnnonces.contenu, {'label':' ','attr':{'placeholder':'Quel est le contenu de votre anonce ?'}} )}}
+        {{form_row(formAnnonces.photo, {'label':' ','attr':{'placeholder':'Quelle est l\'adresse URL de votre photo ?'}} )}}
+        {{form_row(formAnnonces.prix, {'label':' ','attr':{'placeholder':'Quel est votre prix ?'}} )}}
+
+
+        <button type="submit" class="btn btn-dark">
+        {% if editmode %}
+        Modifier
+        {% else %}
+        Ajouter
+        {% endif %}
+        </button>
+                <a href={{path('home')}} class="btn btn-dark">Revenir</a>
+
+                {{form_end(formAnnonces)}}
+
+    </div >
+
+
+{% endblock %}

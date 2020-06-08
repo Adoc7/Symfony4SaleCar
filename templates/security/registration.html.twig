@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+
+{% block body %}
+<h1>Inscription</h1>
+<style>
+    .fontAwesome {
+  font-family: 'Helvetica', FontAwesome, sans-serif;
+}
+</style>
+
+{{form_start(form)}}
+{{form_row(form.username, {'label':" ", 'class':'fontAwesome', 'attr': {'placeholder':
+"Nom d'utilisateur"}} ) }}
+{{form_row(form.email, {'label':' ', 'attr': {'placeholder':"Adresse e-mail"}} ) }}
+{{form_row(form.password, {'label':" ", 'attr': {'placeholder':"Mot de passe"}} ) }}
+{{form_row(form.confirm_password, {'label':" ", 'attr': {'placeholder':"Confirmation de votre mot de passe"}} ) }}
+<button type="submit" class="btn btn-dark">Valider</button>
+{{form_end(form)}}
+
+{% endblock %}

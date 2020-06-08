@@ -1,0 +1,95 @@
+{# <h1>{{annonce.titre}}</h1>
+<p>{{annonce.pseudo}}</p>
+<img src="{{annonce.photo}}">
+<legend>
+Annonce publiée le : {{annonce.createdAt | date("d/m/Y")}} 
+                 à : {{annonce.createdAt | date("H:i")}} 
+</legend>
+<a href={{path('home')}}>Revenir</a> #}
+
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+                <div class="col-sm-12"><h1><strong>{{annonce.titre}}</h1></strong></div>
+                <div class="col-sm-12 col-md-12">
+                
+                    <h5><strong>Prix : {{annonce.prix}} euros</strong></h5>
+                   <div> <small>
+                    Annonce publiée par: {{annonce.pseudo}} 
+                                    Le : {{annonce.createdAt | date("d/m/Y")}} 
+                                     à : {{annonce.createdAt | date("H:i")}} <br>
+                     Dans la catégorie : {{annonce.category.titre}}
+                    </small></div class="container">
+                    <br>
+                    <img src="{{annonce.photo}}" style="width:100%; height:auto;">
+                   
+                    </div>
+                    <div> <br></div>
+                    <div class="container">  {{annonce.contenu | raw}}</div>
+
+                <div class="col-sm-12 col-md-12">
+
+                   <a href={{path('home')}} class="btn btn-outline-dark btn-lg btn-block">Revenir à la liste des annonces</a>
+                </div>
+                  <div class="col-sm-12 col-md-6">
+                    <a href={{path('annonce_create')}} class="btn btn-outline-dark btn-lg btn-block">Créer une annonce</a>                        
+                  </div>
+                    <div class="col-sm-12 col-md-6">
+                         <a href={{path('annonce_edit', {'id':annonce.id})}} class="btn btn-outline-dark btn-lg btn-block">Modifier l'annonce</a>
+                    </div>
+
+                    <section class="container">
+                     <br><hr>
+                        <div class="col-sm-12"><h1><strong>
+                       {{annonce.comments | length}}
+
+                        {% if annonce.comments | length < 2 %}
+                         commentaire
+                         {% else %}
+                         commentaires
+                         {% endif %}
+                         </strong></h1>
+                        <hr>
+                          {% for comment in annonce.comments %}
+                            Commentaire écrit par <strong>{{comment.auteur}}</strong> le
+                            <small>{{comment.createdAt | date('d/m/Y à H:i') }}</small>
+                            <div><h4>{{comment.contenu | raw}}</h4><hr> </div>
+                          {% endfor %}
+                        </div>
+
+
+                        {# FORMULAIRE DE COMMENTAIRES #}
+
+                        {% if app.user %}
+                            <h1>AJOUTER UN COMMENTAIRE</h1>
+
+                            {{ form_start(commentForm )}}
+
+                            {{ form_row(commentForm.auteur) }}
+                            {# {{form_row(commentForm.contenu)}} #}
+                            {{ form_row(commentForm.contenu, {'label':' ','attr':{'placeholder':'Quel est votre commentaire ?'}} ) }}
+
+                            <button type="submit" class="btn btn-dark">Commenter</button>
+                            {{ form_end(commentForm) }}
+
+                        {% else %}
+                            <h2>Vous souhaitez commenter cette annonce ?
+                            <br>                           
+                               <span><a href="{{path('security_login')}}" class="btn btn-dark">Connectez vous <a/></span>
+                            
+                            ou                        
+                               <span><a href="{{path('security_registration')}}" class="btn btn-dark">Inscrivez vous<a/></span>
+                            </h2>
+                    
+                        {% endif %}
+
+
+                    </section>
+
+        </div>
+    </div >
+
+{% endblock %}
